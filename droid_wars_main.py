@@ -1,5 +1,4 @@
 from random import randint
-from functools import reduce
 
 class Base_droid:
 	def __init__(self, name, strength, defense, AI):
