@@ -58,11 +58,12 @@ class Fight_droid(Base_droid):
 
 
 fight_droid_1 = Fight_droid("Sawing Droid", 6, 4, 2, 1)
-
+fight_droid_2 = Fight_droid("Defibrillator Droid", 4, 5, 3, 1)
 
 base_droid_1 = Base_droid("Cleaning Droid", 6, 4, 2)
 base_droid_2 = Base_droid("Data Droid", 7, 2, 3)
 base_droid_3 = Base_droid("Droid.Exe", 5, 3, 4)
+
 
 print("\n",base_droid_1.name,"\n")
 base_droid_1.show_status()
@@ -95,3 +96,5 @@ print("\n5 fight")
 fight(fight_droid_1, base_droid_2)
 print("\n6 fight")
 fight(fight_droid_1, base_droid_2)
+print("-------------second gen droids-------------")
+fight(fight_droid_1, fight_droid_2)

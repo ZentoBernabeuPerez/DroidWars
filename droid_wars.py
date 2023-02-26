@@ -12,7 +12,7 @@ class Droid:
 		print("AI: ", self.AI)
 		print("Defense: ", self.defense)
 		print("Durability: ", self.durability)
-		
+		 
 	def level_up(self, strength, AI, defense):
 		self.strength = self.strength + strength
 		self.AI = self.AI + AI
