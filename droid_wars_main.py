@@ -1,10 +1,11 @@
 from random import randint
-"""La primera idea es ahora crear una clase mas basica aun que solo contenga los atributos base (name, strength, defense, AI)
-para asi diverger la clase base entre droides de servicio y droides de pelea basicos, los de servicio serviran para
-implementar mejoras en los droides superiores, por ejemplo que les den bonus o los puedan reparar)
+"""mejoras en los droides superiores, por ejemplo que los puedan reparar)
 La segunda idea es hacer que el daño sea tambien aleatorio sergfun los status de los robots (de momento es un randint de 1 a 4
 pero habria que cambiarlo por un factor propio o del arma
-La tercera idea es agregar un bloque de accion extra en el ataque para ejecutar acciones bonus o algo asi (como implementaciones de los droides superiores"""
+La tercera idea es agregar un bloque de accion extra en el ataque para ejecutar acciones bonus o algo asi (como implementaciones de los droides superiores
+Otra idea es un counteraction
+La ultima idea podria ser que el combate tuviese que ocurrir en varias fases, del droide mas avanzado al mas flojo y que se gane por una puntuación conjunta"""
+
 class Droid:
 	def __init__(self, name, strength, defense, AI):
 		self.name = name
@@ -12,6 +13,12 @@ class Droid:
 		self.defense = defense
 		self.AI = AI
 
+class Support_droid(Droid):
+	def __init__(self, name, strength, defense, AI):
+		super().__init__(name, strength, defense, AI)	
+		self.tank_support = self.defense 
+		self.mobility_support = self.AI 
+		self.attack_support = self.strength
 
 
 class Base_droid(Droid):
@@ -40,7 +47,7 @@ class Base_droid(Droid):
 	def restore_durability(self):
 		self.durability = self.defense * 4
 
-	"""def attack(self, target):
+	def attack(self, target):
 		skip_level = randint(0, target.maneuvering)
 		atack_level = randint(0, self.AI)
 		if atack_level >= skip_level:
@@ -55,7 +62,7 @@ class Base_droid(Droid):
 			else:
 				damage = 0
 				print(self.name, "did", damage_done, "damage points to", target.name)
-				target.durability = target.durability -  damage_done"""
+				target.durability = target.durability -  damage_done
 
 		else:
 			print(self.name + " failure.")
@@ -72,7 +79,23 @@ class Fight_droid(Base_droid):
 		super().show_status()
 		print("Mele: ", self.mele)
 
+class Super_droid(Fight_droid):
+	def __init__(self, name, strength, defense, AI, mele, Support_droid):
+		super().__init__(name, strength, defense, AI, mele)
+		self.AI = AI + Support_droid.AI
+		self.Support_droid = Support_droid
+		self.durability = (self.defense + Support_droid.tank_support) * 8
+		self.maneuvering = (self.AI + Support_droid.mobility_support) * 4 
+		self.damage = (self.strength + self.mele + Support_droid.attack_support) * 2
 
+
+support_droid_1 = Support_droid("Tanke", 0, 4, 0)
+support_droid_2 = Support_droid("Stinger", 2, 0, 2)
+support_droid_3 = Support_droid("Equilibrer", 2, 1, 1)
+
+super_droid_1 = Super_droid("Tumbler", 6, 5, 3, 2, support_droid_3)
+super_droid_2 = Super_droid("The stiff", 7, 2, 4, 3, support_droid_2)
+super_droid_3 = Super_droid("Wasp", 4, 5, 4, 3, support_droid_1) 
 
 fight_droid_1 = Fight_droid("Sawing Droid", 6, 4, 2, 1)
 fight_droid_2 = Fight_droid("Defibrillator Droid", 4, 5, 3, 1)
@@ -107,11 +130,11 @@ print("\nsecond fight")
 fight(base_droid_1, base_droid_3)
 print("\nthird fight")
 fight(base_droid_3, base_droid_2)
-print("\n4 fight")
-fight(fight_droid_1, base_droid_2)
-print("\n5 fight")
-fight(fight_droid_1, base_droid_2)
-print("\n6 fight")
-fight(fight_droid_1, base_droid_2)
 print("-------------second gen droids-------------")
 fight(fight_droid_1, fight_droid_2)
+print("\n\n\n------------------third gen droids-----------------")
+fight(super_droid_1, super_droid_2)
+print("-------------------------------")
+fight(super_droid_2, super_droid_3)
+print("------------------------")
+fight(super_droid_3, super_droid_1)
