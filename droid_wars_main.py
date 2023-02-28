@@ -1,11 +1,22 @@
 from random import randint
-
-class Base_droid:
+"""La primera idea es ahora crear una clase mas basica aun que solo contenga los atributos base (name, strength, defense, AI)
+para asi diverger la clase base entre droides de servicio y droides de pelea basicos, los de servicio serviran para
+implementar mejoras en los droides superiores, por ejemplo que les den bonus o los puedan reparar)
+La segunda idea es hacer que el daño sea tambien aleatorio sergfun los status de los robots (de momento es un randint de 1 a 4
+pero habria que cambiarlo por un factor propio o del arma
+La tercera idea es agregar un bloque de accion extra en el ataque para ejecutar acciones bonus o algo asi (como implementaciones de los droides superiores"""
+class Droid:
 	def __init__(self, name, strength, defense, AI):
 		self.name = name
 		self.strength = strength
 		self.defense = defense
 		self.AI = AI
+
+
+
+class Base_droid(Droid):
+	def __init__(self, name, strength, defense, AI):
+		super().__init__(name, strength, defense, AI)	
 		self.durability = self.defense * 4
 		self.maneuvering = self.AI * 2
 		self.damage = self.strength * 2
@@ -29,19 +40,25 @@ class Base_droid:
 	def restore_durability(self):
 		self.durability = self.defense * 4
 
-	def attack(self, target):
+	"""def attack(self, target):
 		skip_level = randint(0, target.maneuvering)
 		atack_level = randint(0, self.AI)
 		if atack_level >= skip_level:
-			damage_done = self.damage - target.defense
-			print(self.name, "did", damage_done, "damage points to", target.name)
-			target.durability = target.durability -  damage_done
-			if target.check_operativity():
-				print(target.name, "still has", target.durability, "durability points.")
+			damage_done = (self.damage * randint(1, 2))  - (target.defense * randint(1,4))
+			if damage_done > 0:
+				print(self.name, "did", damage_done, "damage points to", target.name)
+				target.durability = target.durability -  damage_done
+				if target.check_operativity():
+					print(target.name, "still has", target.durability, "durability points.")
+				else:
+					target.droid_destroyed()
 			else:
-				target.droid_destroyed()
+				damage = 0
+				print(self.name, "did", damage_done, "damage points to", target.name)
+				target.durability = target.durability -  damage_done"""
+
 		else:
-			print("failed attack")
+			print(self.name + " failure.")
 
 class Fight_droid(Base_droid):
 	def __init__(self, name, strength, defense, AI, mele):
