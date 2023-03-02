@@ -42,3 +42,6 @@ class Droid:
 base_droid1 = Droid("Cleaning Droid", 25, 10, 10, 100)
 base_droid2 = Droid("Data Droid", 22, 11, 15, 100)
 
+
+
+base_droid1.destroyed_droid()
