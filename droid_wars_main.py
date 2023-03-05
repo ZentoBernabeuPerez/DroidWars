@@ -182,3 +182,7 @@ fight(humandroid_1, humandroid_2)
 
 humandroid_1.show_status()
 humandroid_2.show_status()
+
+droidctionary = "esto es solo para acordarme del droidctionary"
+attributes = [i for i in dir(base_droid_1) if not i.startswith("__")]
+print(attributes)
