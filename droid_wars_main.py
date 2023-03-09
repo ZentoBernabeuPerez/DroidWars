@@ -32,7 +32,7 @@ class Base_droid(Droid):
 
 	def show_status(self):
 		print("Droid Type: ", self.name)
-		print("Strength: ", self.strength)
+		print("Strength: ", "*" * self.strength)
 		print("Defense: ", self.defense)
 		print("AI: ", self.AI)
 		print("Durability: ", self.durability)
@@ -49,6 +49,10 @@ class Base_droid(Droid):
 	def restore_durability(self):
 		self.durability = self.defense * 4
 
+	def is_winner(self):
+		if self.durability > 0:
+			return self.name
+
 	def attack(self, target):
 		skip_level = randint(0, target.maneuvering)
 		atack_level = randint(0, self.AI)
@@ -63,6 +67,7 @@ class Base_droid(Droid):
 				else:
 					print(self.name, "did", damage_done, "damage points to", target.name)
 					target.droid_destroyed()
+					self.is_winner()
 			else:
 				print(self.name, "did no damage to", target.name)
 				return True
@@ -145,14 +150,6 @@ base_droid_2 = Base_droid("Data Droid", 7, 2, 3)
 base_droid_3 = Base_droid("Droid.Exe", 5, 3, 4)
 
 
-print("\n",base_droid_1.name,"\n")
-base_droid_1.show_status()
-print("\n",base_droid_2.name,"\n")
-base_droid_2.show_status()
-print("\n",base_droid_3.name,"\n")
-base_droid_3.show_status()
-print("\n",fight_droid_1.name,"\n")
-fight_droid_1.show_status()
 
 def fight(droid1, droid2):
 	droid1.restore_durability()
@@ -164,28 +161,7 @@ def fight(droid1, droid2):
 		else:
 			continue
 
-print("\nFirst fight")
-fight(base_droid_1, base_droid_2)
-print("\nsecond fight")
-fight(base_droid_1, base_droid_3)
-print("\nthird fight")
-fight(base_droid_3, base_droid_2)
-print("-------------second gen droids-------------")
-fight(fight_droid_1, fight_droid_2)
-print("\n\n\n------------------third gen droids-----------------")
-fight(super_droid_1, super_droid_2)
-print("-------------------------------")
-fight(super_droid_2, super_droid_3)
-print("------------------------")
-fight(super_droid_3, super_droid_1)
-print("\n\n\n------------------fourth gen droids-----------------")
-fight(humandroid_1, humandroid_2)
 
-humandroid_1.show_status()
-humandroid_2.show_status()
-
-droidctionary = "esto es solo para acordarme del droidctionary"
+"""droidctionary = "esto es solo para acordarme del droidctionary"
 attributes = [i for i in dir(base_droid_1) if not i.startswith("__")]
-print(attributes)
-
-"""today im feeling blue for playing with droids, shit happens"""
+print(attributes)"""
