@@ -5,7 +5,8 @@ pero habria que cambiarlo por un factor propio o del arma
 La tercera idea es agregar un bloque de accion extra en el ataque para ejecutar acciones bonus o algo asi (como implementaciones de los droides superiores
 Otra idea es un counteraction
 La ultima idea podria ser que el combate tuviese que ocurrir en varias fases, del droide mas avanzado al mas flojo y que se gane por una puntuación conjuntaç
-Falta tambien implementar unos status maxcimos y minimos para que no se vayan de madre"""
+Falta tambien implementar unos status maxcimos y minimos para que no se vayan de madre
+otra idea es que puedas apostar para que u robot lleve unas u otras mejoras"""
 
 class Droid:
 	def __init__(self, name, strength, defense, AI):
@@ -186,3 +187,5 @@ humandroid_2.show_status()
 droidctionary = "esto es solo para acordarme del droidctionary"
 attributes = [i for i in dir(base_droid_1) if not i.startswith("__")]
 print(attributes)
+
+"""today im feeling blue for playing with droids, shit happens"""
