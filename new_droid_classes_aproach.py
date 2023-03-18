@@ -21,9 +21,9 @@ class Base_droid(Droid_Core):
 		self.strength = strength + Droid_Core.strength
 		self.defense = defense + Droid_Core.defense
 		self.AI = AI + Droid_Core.AI
-		self.damage = strength + Droid_Core.strength
-		self.durability = defense + Droid_Core.defense
-		self.maneuvering = AI + Droid_Core.AI
+		self.damage = (strength + Droid_Core.strength) * 2
+		self.durability = (defense + Droid_Core.defense) * 2
+		self.maneuvering = (AI + Droid_Core.AI) * 2
 
 
 	def show_status(self):
@@ -85,14 +85,48 @@ class Fighter_droid(Base_droid):
 class Super_droid(Fighter_droid):
 	def __init__(self, name, strength, defense, AI, Droid_Core, Base_droid, Fighter_droid, Support_droid):
 		super().__init__(name, strength, defense, AI, Droid_Core, Base_droid)
-		self.name = Fighter_droid.name + " featuring " + Support_droid.name + " A.K.A " + name
+		self.name = Fighter_droid.name + " feat. " + Support_droid.name + " " + name
 		self.strength = Fighter_droid.strength + strength
 		self.defense = Fighter_droid.defense + defense
 		self.AI = Fighter_droid.AI + AI
 		self.damage = Fighter_droid.damage * Support_droid.attack_support
 		self.durability = Fighter_droid.durability * Support_droid.tank_support
 		self.maneuvering = Fighter_droid.maneuvering * Support_droid.mobility_support
-		
+
+class Humandroid(Super_droid):
+	def __init__(self, name, strength, defense, AI, Droid_Core, Base_droid, Fighter_droid, Support_droid, Super_droid, Extension_droid):
+		super().__init__(name, strength, defense, AI, Droid_Core, Base_droid, Fighter_droid, Support_droid)
+		self.name = name + " with " + Extension_droid.name
+		self.strength = Super_droid.strength + strength
+		self.defense = Super_droid.defense + defense
+		self.AI = Super_droid.AI + AI
+		self.damage = Super_droid.damage * Support_droid.attack_support
+		self.durability = Super_droid.durability * Support_droid.tank_support
+		self.maneuvering = Super_droid.maneuvering * Support_droid.mobility_support
+		self.extension_droid = Extension_droid
+
+	def attack(self, target):
+		if Base_droid.attack(self, target) == True:
+			Extension_droid.attack_ext(self.extension_droid, target)
+
+class Extension_droid(Droid_Core):
+	def __init__(self, name, strength, defense, AI):
+		super().__init__(name, strength, defense, AI)	
+		self.defense_extension = defense
+		self.maneuvering_extension = AI
+		self.attack_extension = strength
+
+	def attack_ext(self, target):
+		target.durability = target.durability - self.attack_extension
+		if target.check_operativity():
+			print(f"Attack extended did", self.attack_extension, "points of damage")
+			print(f"Durability of", target.name, "is now", target.durability)
+		else:
+			print(f"Attack extended did", self.attack_extension, "points of damage extended")
+			target.droid_destroyed()
+
+
+
 
 
 def fight(droid1, droid2):
@@ -106,69 +140,3 @@ def fight(droid1, droid2):
 			continue
 
 
-droid_Core1 = Droid_Core("Pure ", 4, 1, 1)
-base_droid1 = Base_droid("Fucking ", 3, 2, 1, droid_Core1)
-fighter_droid1 = Fighter_droid("Metal", 2, 2, 2, droid_Core1, base_droid1)
-support_droid1 = Support_droid("PLOWINK", 2, 1, 1)
-super_droid1 = Super_droid("The Killer!", 3, 3, 2, droid_Core1, base_droid1, fighter_droid1, support_droid1)
-
-droid_Core2 = Droid_Core("Young ", 2, 2, 2)
-base_droid2 = Base_droid("Naive ", 2, 2, 2, droid_Core2)
-fighter_droid2 = Fighter_droid("Sucker ", 2, 2, 2, droid_Core2, base_droid2) 
-support_droid2 = Support_droid("CHANTILLY", 1, 1, 2)
-super_droid2 = Super_droid("True Motherfucker!", 2, 3, 3, droid_Core2, base_droid2, fighter_droid2, support_droid2)
-
-
-
-base_droid1.show_status()
-base_droid2.show_status()
-print("--------------------")
-fighter_droid1.show_status()
-fighter_droid2.show_status()
-
-print("______FIGHTS__________")
-print("___BASE FIGHTS_______")
-counter_a = 0
-counter_b = 0
-for i in range(0, 20):
-	fight(base_droid1, base_droid2)
-	if base_droid1.is_winner():
-		counter_a = counter_a + 1
-	else:
-		counter_b = counter_b + 1
-	print("-------------------------")
-	base_droid1.restore_durability()
-	base_droid2.restore_durability()
-print(f"a= ",counter_a)
-print(f"b= ",counter_b)
-print("____Fighters Fights____")
-counter_a = 0
-counter_b = 0
-for i in range(0, 20):
-	fight(fighter_droid1, fighter_droid2)
-	if fighter_droid1.is_winner():
-		counter_a = counter_a + 1
-	else:
-		counter_b = counter_b + 1
-	print("-------------------------")
-	fighter_droid1.restore_durability()
-	fighter_droid2.restore_durability()
-print(f"a= ",counter_a)
-print(f"b= ",counter_b)
-print("____Super Fights____")
-counter_a = 0
-counter_b = 0
-for i in range(0, 20):
-	fight(super_droid1, super_droid2)
-	if super_droid1.is_winner():
-		counter_a = counter_a + 1
-	else:
-		counter_b = counter_b + 1
-	print("-------------------------")
-	super_droid1.restore_durability()
-	super_droid2.restore_durability()
-print(f"a= ",counter_a)
-print(f"b= ",counter_b)
-
-super_droid1.show_status()
-super_droid2.show_status()
