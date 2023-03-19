@@ -7,6 +7,12 @@ class Droid_Core:
 		self.defense = defense
 		self.AI = AI
 
+	def show_base_status(self):
+		print("Type: ", self.name)
+		print("Strength: ", self.strength)
+		print("Defense: ", self.defense)
+		print("AI: ", self.AI)
+
 class Support_droid(Droid_Core):
 	def __init__(self, name, strength, defense, AI):
 		super().__init__(name, strength, defense, AI)	
@@ -24,6 +30,9 @@ class Base_droid(Droid_Core):
 		self.damage = (strength + Droid_Core.strength) * 2
 		self.durability = (defense + Droid_Core.defense) * 2
 		self.maneuvering = (AI + Droid_Core.AI) * 2
+
+	def sum_of_status(self):
+		print(self.name, "", self.strength + self.defense + self.AI + self.damage + self.durability + self.maneuvering)
 
 
 	def show_status(self):
